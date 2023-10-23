@@ -25,6 +25,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Update database
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet ef database update --project MinimalBookApi
+        env:
+          ASPNETCORE_ENVIRONMENT: Production
+          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_CONNECTION }}
+
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
@@ -47,14 +55,6 @@ jobs:
         with:
           name: .net-app
 
-      - name: Update database
-        run: |
-          dotnet tool install --global dotnet-ef
-          dotnet tool restore
-          dotnet ef database update --project MinimalBookApi/MinimalBookApi.csproj
-        env:
-          ASPNETCORE_ENVIRONMENT: Production
-          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_CONNECTION }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
