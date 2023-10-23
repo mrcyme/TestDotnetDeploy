@@ -47,7 +47,7 @@ jobs:
         with:
           name: .net-app
       - name: Run EF Core Migrations
-        run: dotnet ef database update --project MinimalBookApi --configuration Release
+        run: dotnet ef database update --configuration Release
         env:
           ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_CONNECTION }}
       - name: Deploy to Azure Web App
