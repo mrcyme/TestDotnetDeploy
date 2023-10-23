@@ -46,10 +46,17 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: .net-app
+
+
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+
       - name: Run EF Core Migrations
-        run: dotnet ef database update --configuration Release
+        run: ~/.dotnet/tools/dotnet-ef database update --configuration Release
         env:
           ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_CONNECTION }}
+
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
