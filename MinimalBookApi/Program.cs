@@ -1,12 +1,22 @@
 using MinimalBookApi;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Get Configuration
+var configuration = builder.Configuration;
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>();
+
+// Add DbContext with the connection string from appsettings.json
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -67,4 +77,3 @@ public class Book
     public required string Title { get; set; }
     public required string Author { get; set; }
 }
-
