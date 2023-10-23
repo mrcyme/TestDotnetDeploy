@@ -27,8 +27,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/", async context =>
+    {
+        context.Response.Redirect("/index.html");
+    });
 
+    // ... other endpoint mappings
+});
 app.MapGet("/book", async (DataContext context) =>
     await context.Books.ToListAsync());
 
