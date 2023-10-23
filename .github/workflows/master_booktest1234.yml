@@ -52,7 +52,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Run EF Core Migrations
-        run: dotnet ef database update --project MinimalBookApi
+        run: dotnet ef database update --project ./MinimalBookApi
         env:
           ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_CONNECTION }}
 
