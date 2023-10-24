@@ -25,10 +25,9 @@ jobs:
       - name: Build with dotnet
         run: |
           dotnet build --configuration Release
-          echo ${{ secrets.AZURE_POSTGRES_DEFAULT_CONNECTION }}
         env:
           ASPNETCORE_ENVIRONMENT: Production
-          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_DEFAULT_CONNECTION }}
+          ConnectionStrings__DefaultConnection: "Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=Gigaset4015;"
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
