@@ -20,25 +20,30 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    dbContext.Database.Migrate();
 }
+
+// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+
+app.UseSwagger(); 
+app.UseSwaggerUI();
 
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseEndpoints(endpoints =>
-{
-    endpoints.MapGet("/", async context =>
     {
-        context.Response.Redirect("/index.html");
-    });
+        endpoints.MapGet("/", async context =>
+        {
+            context.Response.Redirect("/index.html");
+        });
 
-    // ... other endpoint mappings
-});
+        // ... other endpoint mappings
+    });
 app.MapGet("/book", async (DataContext context) =>
     await context.Books.ToListAsync());
 
