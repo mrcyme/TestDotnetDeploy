@@ -42,8 +42,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ASPNETCORE_ENVIRONMENT: Production
-      CONNECTIONSTRINGS__DEFAULTCONNECTION: "Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=Gigaset4015;"
-      
+     
+
     needs: build
     environment:
       name: 'Production'
