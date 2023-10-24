@@ -28,7 +28,7 @@ jobs:
           echo ${{ secrets.AZURE_POSTGRES_DEFAULT_CONNECTION }}
         env:
           ASPNETCORE_ENVIRONMENT: Production
-          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_DEFAULT_CONNECTION }}
+          ConnectionStrings:DefaultConnection: ${{ secrets.AZURE_POSTGRES_DEFAULT_CONNECTION }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
