@@ -23,12 +23,16 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: |
+          dotnet build --configuration Release
+          echo ${{ secrets.AZURE_POSTGRES_DEFAULT_CONNECTION }}
         env:
           ASPNETCORE_ENVIRONMENT: Production
+          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_POSTGRES_DEFAULT_CONNECTION }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+          
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
