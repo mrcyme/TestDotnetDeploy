@@ -27,7 +27,7 @@ jobs:
       - name: Build with dotnet
         run: |
           dotnet build --configuration Release
-          echo $({{ConnectionStrings__DefaultConnection}})
+          echo ${{env.ConnectionStrings__DefaultConnection}}
         env:
           ConnectionStrings__DefaultConnection: 'Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=Gigaset4015;'
 
