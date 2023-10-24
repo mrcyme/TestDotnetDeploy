@@ -6,6 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Get Configuration
 var configuration = builder.Configuration;
 
