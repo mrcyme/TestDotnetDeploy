@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ASPNETCORE_ENVIRONMENT: Production
-      CONNECTIONSTRINGS__DEFAULTCONNECTION: "Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=Gigaset4015;"
+      ConnectionStrings__DefaultConnection: "Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=Gigaset4015;"
 
     steps:
       - uses: actions/checkout@v4
@@ -41,6 +41,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    env:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=Gigaset4015;"
     needs: build
     environment:
       name: 'Production'
