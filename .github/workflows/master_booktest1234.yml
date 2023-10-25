@@ -27,6 +27,14 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
+      - name: Update database
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet tool restore
+          dotnet ef database update -c DataContext -p MimimalBookApi
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
@@ -53,4 +61,3 @@ jobs:
           app-name: 'booktest1234'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48C2CBA21E5A4BD19D1D5DB1C7FEE570 }}
-          package: .
