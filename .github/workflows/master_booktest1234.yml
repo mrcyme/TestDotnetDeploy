@@ -11,10 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    env:
-      ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings_DefaultConnection: "Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=admin;"
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -26,12 +23,11 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: |
-          dotnet build --configuration Release
+        run: dotnet build --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-          
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
@@ -39,10 +35,7 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
-    runs-on: ubuntu-latest
-    env:
-      ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings_DefaultConnection: "Server=playswap-db.postgres.database.azure.com;Port=5432;Database=books;User Id=playswap;Password=admin;"
+    runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
@@ -54,12 +47,11 @@ jobs:
         with:
           name: .net-app
 
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'booktest1234'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B4A8076E06F142B18D57F4682547BEBE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48C2CBA21E5A4BD19D1D5DB1C7FEE570 }}
           package: .
