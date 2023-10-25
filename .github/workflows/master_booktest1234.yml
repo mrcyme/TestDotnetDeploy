@@ -27,7 +27,7 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-       #- name: Update database
+      #- name: Update database
       #  run: |
       #    dotnet tool install --global dotnet-ef
       #    dotnet tool restore
